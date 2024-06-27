@@ -1,33 +1,36 @@
-version:'1'
+version: '3'
 services:
   postgres:
-    container_name:postgres
-    image:postgres:15.3-alpine
+    container_name: postgres
+    image: postgres:15.3-alpine
     expose:
-    - '5432'
+      - '5432'
     ports:
-    - '5432'
+      - '5432:5432'
     volumes:
-     - data-volume:/data/db
-    enviroment:
+      - data-volume:/var/lib/postgresql/data
+    environment:
       POSTGRES_PASSWORD: postgress
-      POSGRES_DB:App
-    networks:postgres
+      POSTGRES_DB: App
+    networks:
+      - postgres
+
   pgadmin:
     links:
-    - postgres:postgres
-    container_name:pgadmin
-    image:dpage/pgadmin4:latest
+      - postgres:postgres
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
     ports:
-    - '8089:80'
-    enviroment:
+      - '8089:80'
+    environment:
       PGADMIN_DEFAULT_EMAIL: pgadmin
       PGADMIN_DEFAULT_PASSWORD: pgadmin
-    volumes:
-      - /data/pgadmin:/root/.pgadmin
-    networks:postgres
+    networks:
+      - postgres
+
 volumes:
   data-volume:
+
 networks:
   postgres:
     driver: bridge
