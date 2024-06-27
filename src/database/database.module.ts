@@ -1,4 +1,4 @@
-import { Inject, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -11,11 +11,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
             useFactory:  (configService: ConfigService) => {
                 return {
                     type:'postgres',
-                    host: configService.get<string>('DB_HOST'),
-                    port: configService.get<number>('DB_PORT'),
-                    username: configService.get<string>('DB_USERNAME'),
-                    password: configService.get<string>('DB_PASSWORD'),
-                    database: configService.get<string>('DB_NAME'),
+                    host: configService.get<string>('POSTGRES_HOST'),
+                    port: configService.get<number>('POSTGRES_PORT'),
+                    username: configService.get<string>('POSTGRES_USERNAME'),
+                    password: configService.get<string>('POSTGRES_PASSWORD'),
+                    database: configService.get<string>('POSTGRES_DB'),
                     entities: [__dirname + '/../app/**entities/*.entity{.ts,.js}'], // this is where we will define the entities
                     synchronize: true,//this is for development only
                 }
